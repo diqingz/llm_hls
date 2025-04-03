@@ -1,0 +1,242 @@
+<ENTRY>
+{
+ "thisFile": "/home/diqingz2/llm_hls/fpga/attention_kernel.hw.xo.compile_summary",
+ "connectId": "",
+ "serverToken": "",
+ "timestamp": "0"
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_CmdStep",
+ "dateTimestamp": "Thu Apr  3 13:59:01 2025",
+ "timestampMillis": "1743706741674",
+ "buildStep": {
+  "cmdId": "fce9edea-964e-4c47-abb9-f426f8d0781c",
+  "name": "v++",
+  "logFile": "/home/diqingz2/llm_hls/fpga/_x/attention_kernel.hw/attention_kernel.hw.steps.log",
+  "commandLine": "/opt/xilinx/Vitis/2022.1/bin/unwrapped/lnx64.o/v++  --vivado.prop \"run.__KERNEL__.{STEPS.SYNTH_DESIGN.ARGS.MORE OPTIONS}={-directive sdx_optimization_effort_high}\" --advanced.misc \"report=type report_timing_summary name impl_report_timing_summary_route_design_summary steps {route_design} runs {impl_1} options {-max_paths 10}\" --advanced.misc \"report=type report_timing_summary name impl_report_timing_summary_post_route_phys_opt_design_summary steps {post_route_phys_opt_design} runs {impl_1} options {-max_paths 10}\" -c -t hw --platform /opt/xilinx/platforms/xilinx_u250_gen3x16_xdma_4_1_202210_1/xilinx_u250_gen3x16_xdma_4_1_202210_1.xpfm -k attention_kernel --config attention_kernel.cfg -o attention_kernel.hw.xo attention_hls.cpp ",
+  "args": [
+   "-c",
+   "-t",
+   "hw",
+   "--platform",
+   "/opt/xilinx/platforms/xilinx_u250_gen3x16_xdma_4_1_202210_1/xilinx_u250_gen3x16_xdma_4_1_202210_1.xpfm",
+   "-k",
+   "attention_kernel",
+   "--config",
+   "attention_kernel.cfg",
+   "-o",
+   "attention_kernel.hw.xo",
+   "attention_hls.cpp"
+  ],
+  "iniFiles": [
+   {
+    "path": "/home/diqingz2/llm_hls/fpga/attention_kernel.cfg",
+    "content": "[connectivity]\r\nnk=attention_kernel:1:attention_kernel_1\r\n\r\n[profile]\r\ndata=all:all:all\r\n\r\n[hls]\r\npre_tcl=hls_config.tcl"
+   }
+  ],
+  "cwd": "/home/diqingz2/llm_hls/fpga"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Status",
+ "dateTimestamp": "Thu Apr  3 13:59:01 2025",
+ "timestampMillis": "1743706741674",
+ "status": {
+  "cmdId": "fce9edea-964e-4c47-abb9-f426f8d0781c",
+  "state": "CS_RUNNING"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_FlowMetaData",
+ "dateTimestamp": "Thu Apr  3 13:59:09 2025",
+ "timestampMillis": "1743706749775",
+ "buildSummary": {
+  "hardwarePlatform": "xilinx_u250_gen3x16_xdma_4_1_202210_1.xpfm",
+  "hardwareDsa": "",
+  "platformDirectory": "/opt/xilinx/platforms/xilinx_u250_gen3x16_xdma_4_1_202210_1",
+  "runtime": "OpenCL",
+  "systemConfig": "Linux",
+  "flow": "BF_COMPILE",
+  "target": "TT_HW",
+  "kernels": [
+   {
+    "base": {
+     "type": "KERNEL",
+     "name": "attention_kernel",
+     "file": "/home/diqingz2/llm_hls/fpga/attention_kernel.hw.xo",
+     "reports": [],
+     "uuid": ""
+    },
+    "sources": [
+     "/home/diqingz2/llm_hls/fpga/attention_hls.cpp"
+    ],
+    "psSources": [],
+    "cuNames": [],
+    "type": "HLS",
+    "frequency": 0,
+    "freqUnits": ""
+   }
+  ],
+  "toolVersion": "Vitis V++ Compiler Release 2022.1. SW Build 3524075 on 2022-04-13-17:42:45"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_SubCmdStep",
+ "dateTimestamp": "Thu Apr  3 13:59:09 2025",
+ "timestampMillis": "1743706749779",
+ "buildStep": {
+  "cmdId": "b89ea4ee-e410-4c76-8b04-8012c9973ab4",
+  "name": "vitis_hls",
+  "logFile": "/home/diqingz2/llm_hls/fpga/_x/attention_kernel.hw/attention_kernel/vitis_hls.log",
+  "commandLine": "vitis_hls -f /home/diqingz2/llm_hls/fpga/_x/attention_kernel.hw/attention_kernel/attention_kernel.tcl -messageDb vitis_hls.pb",
+  "args": [
+   "vitis_hls",
+   "-f",
+   "/home/diqingz2/llm_hls/fpga/_x/attention_kernel.hw/attention_kernel/attention_kernel.tcl",
+   "-messageDb",
+   "vitis_hls.pb"
+  ],
+  "iniFiles": [],
+  "cwd": "/home/diqingz2/llm_hls/fpga"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Status",
+ "dateTimestamp": "Thu Apr  3 13:59:09 2025",
+ "timestampMillis": "1743706749780",
+ "status": {
+  "cmdId": "b89ea4ee-e410-4c76-8b04-8012c9973ab4",
+  "state": "CS_RUNNING"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Status",
+ "dateTimestamp": "Thu Apr  3 14:00:49 2025",
+ "timestampMillis": "1743706849320",
+ "status": {
+  "cmdId": "b89ea4ee-e410-4c76-8b04-8012c9973ab4",
+  "state": "CS_PASSED"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Report",
+ "dateTimestamp": "Thu Apr  3 14:00:49 2025",
+ "timestampMillis": "1743706849375",
+ "report": {
+  "path": "/home/diqingz2/llm_hls/fpga/_x/attention_kernel.hw/attention_kernel/attention_kernel/solution/.autopilot/db/attention_kernel.design.xml",
+  "name": "attention_kernel",
+  "fileType": "XML",
+  "reportType": "KERNEL_HLS_REPORT",
+  "cmdId": ""
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Report",
+ "dateTimestamp": "Thu Apr  3 14:00:49 2025",
+ "timestampMillis": "1743706849376",
+ "report": {
+  "path": "/home/diqingz2/llm_hls/fpga/_x/attention_kernel.hw/attention_kernel/attention_kernel/solution/.autopilot/db/.message_syn.xml",
+  "name": "attention_kernel",
+  "fileType": "XML",
+  "reportType": "KERNEL_HLS_DRC_SYNTHESIS",
+  "cmdId": ""
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Report",
+ "dateTimestamp": "Thu Apr  3 14:00:49 2025",
+ "timestampMillis": "1743706849378",
+ "report": {
+  "path": "/home/diqingz2/llm_hls/fpga/_x/reports/attention_kernel.hw/hls_reports/attention_kernel_csynth.rpt",
+  "name": "attention_kernel",
+  "fileType": "TEXT",
+  "reportType": "KERNEL_HLS_CSYNTH",
+  "cmdId": ""
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Report",
+ "dateTimestamp": "Thu Apr  3 14:00:49 2025",
+ "timestampMillis": "1743706849379",
+ "report": {
+  "path": "/home/diqingz2/llm_hls/fpga/_x/attention_kernel.hw/attention_kernel/attention_kernel/solution/syn/report/attention_kernel_csynth.xml",
+  "name": "attention_kernel",
+  "fileType": "XML",
+  "reportType": "KERNEL_HLS_CSYNTH",
+  "cmdId": ""
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Report",
+ "dateTimestamp": "Thu Apr  3 14:00:49 2025",
+ "timestampMillis": "1743706849393",
+ "report": {
+  "path": "/home/diqingz2/llm_hls/fpga/_x/reports/attention_kernel.hw/system_estimate_attention_kernel.hw.xtxt",
+  "name": "",
+  "fileType": "TEXT",
+  "reportType": "GLOBAL_SYSTEM_ESTIMATE",
+  "cmdId": ""
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Report",
+ "dateTimestamp": "Thu Apr  3 14:00:49 2025",
+ "timestampMillis": "1743706849859",
+ "report": {
+  "path": "/home/diqingz2/llm_hls/fpga/_x/reports/attention_kernel.hw/v++_compile_attention_kernel.hw_guidance.html",
+  "name": "",
+  "fileType": "HTML",
+  "reportType": "GLOBAL_RULECHECK_GUIDANCE",
+  "cmdId": ""
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Report",
+ "dateTimestamp": "Thu Apr  3 14:00:49 2025",
+ "timestampMillis": "1743706849860",
+ "report": {
+  "path": "/home/diqingz2/llm_hls/fpga/_x/v++_compile_attention_kernel.hw_guidance.pb",
+  "name": "",
+  "fileType": "BINARY_PROTOBUF",
+  "reportType": "GLOBAL_RULECHECK_GUIDANCE",
+  "cmdId": ""
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Status",
+ "dateTimestamp": "Thu Apr  3 14:00:49 2025",
+ "timestampMillis": "1743706849861",
+ "status": {
+  "cmdId": "fce9edea-964e-4c47-abb9-f426f8d0781c",
+  "state": "CS_PASSED"
+ }
+}
+</ENTRY>

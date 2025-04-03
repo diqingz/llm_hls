@@ -1,0 +1,477 @@
+<ENTRY>
+{
+ "thisFile": "/home/diqingz2/llm_hls/fpga/attention_kernel.hw.xclbin.link_summary",
+ "connectId": "",
+ "serverToken": "",
+ "timestamp": "0"
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_CmdStep",
+ "dateTimestamp": "Thu Mar 27 16:34:40 2025",
+ "timestampMillis": "1743111280727",
+ "buildStep": {
+  "cmdId": "703b4143-fa55-4c5f-adff-2553fd48b633",
+  "name": "v++",
+  "logFile": "/home/diqingz2/llm_hls/fpga/_x/link/link.steps.log",
+  "commandLine": "/opt/xilinx/Vitis/2022.1/bin/unwrapped/lnx64.o/v++  --vivado.prop \"run.__KERNEL__.{STEPS.SYNTH_DESIGN.ARGS.MORE OPTIONS}={-directive sdx_optimization_effort_high}\" --advanced.misc \"report=type report_timing_summary name impl_report_timing_summary_route_design_summary steps {route_design} runs {impl_1} options {-max_paths 10}\" --advanced.misc \"report=type report_timing_summary name impl_report_timing_summary_post_route_phys_opt_design_summary steps {post_route_phys_opt_design} runs {impl_1} options {-max_paths 10}\" -l -t hw --platform /opt/xilinx/platforms/xilinx_u250_gen3x16_xdma_4_1_202210_1/xilinx_u250_gen3x16_xdma_4_1_202210_1.xpfm --config attention_kernel.cfg -o attention_kernel.hw.xclbin attention_kernel.hw.xo ",
+  "args": [
+   "-l",
+   "-t",
+   "hw",
+   "--platform",
+   "/opt/xilinx/platforms/xilinx_u250_gen3x16_xdma_4_1_202210_1/xilinx_u250_gen3x16_xdma_4_1_202210_1.xpfm",
+   "--config",
+   "attention_kernel.cfg",
+   "-o",
+   "attention_kernel.hw.xclbin",
+   "attention_kernel.hw.xo"
+  ],
+  "iniFiles": [
+   {
+    "path": "/home/diqingz2/llm_hls/fpga/attention_kernel.cfg",
+    "content": "[connectivity]\r\nnk=attention_kernel:1:attention_kernel_1\r\n\r\n[profile]\r\ndata=all:all:all\r\n\r\n[hls]\r\npre_tcl=hls_config.tcl"
+   }
+  ],
+  "cwd": "/home/diqingz2/llm_hls/fpga"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Status",
+ "dateTimestamp": "Thu Mar 27 16:34:40 2025",
+ "timestampMillis": "1743111280727",
+ "status": {
+  "cmdId": "703b4143-fa55-4c5f-adff-2553fd48b633",
+  "state": "CS_RUNNING"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_FlowMetaData",
+ "dateTimestamp": "Thu Mar 27 16:34:48 2025",
+ "timestampMillis": "1743111288870",
+ "buildSummary": {
+  "hardwarePlatform": "xilinx_u250_gen3x16_xdma_4_1_202210_1.xpfm",
+  "hardwareDsa": "",
+  "platformDirectory": "/opt/xilinx/platforms/xilinx_u250_gen3x16_xdma_4_1_202210_1",
+  "runtime": "OpenCL",
+  "systemConfig": "Linux",
+  "flow": "BF_LINK",
+  "target": "TT_HW",
+  "binaryContainer": {
+   "base": {
+    "type": "BT_UKNOWN",
+    "name": "attention_kernel.hw",
+    "file": "/home/diqingz2/llm_hls/fpga/attention_kernel.hw.xclbin",
+    "reports": [],
+    "uuid": ""
+   },
+   "kernels": []
+  },
+  "kernels": [
+   {
+    "base": {
+     "type": "KERNEL",
+     "name": "attention_kernel",
+     "file": "/home/diqingz2/llm_hls/fpga/attention_kernel.hw.xo",
+     "reports": [],
+     "uuid": ""
+    },
+    "sources": [
+     "/home/diqingz2/llm_hls/fpga/_x/link/int/xo/attention_kernel/attention_kernel/cpu_sources/attention_hls.cpp"
+    ],
+    "psSources": [],
+    "cuNames": [
+     "attention_kernel_1"
+    ],
+    "type": "HLS",
+    "frequency": 0,
+    "freqUnits": ""
+   }
+  ],
+  "toolVersion": "Vitis V++ Compiler Release 2022.1. SW Build 3524075 on 2022-04-13-17:42:45"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_SubCmdStep",
+ "dateTimestamp": "Thu Mar 27 16:34:49 2025",
+ "timestampMillis": "1743111289033",
+ "buildStep": {
+  "cmdId": "98a350e9-a1ba-43b4-9144-8fb1d934d632",
+  "name": "system_link",
+  "logFile": "",
+  "commandLine": "system_link --xo /home/diqingz2/llm_hls/fpga/attention_kernel.hw.xo --config /home/diqingz2/llm_hls/fpga/_x/link/int/syslinkConfig.ini --xpfm /opt/xilinx/platforms/xilinx_u250_gen3x16_xdma_4_1_202210_1/xilinx_u250_gen3x16_xdma_4_1_202210_1.xpfm --target hw --output_dir /home/diqingz2/llm_hls/fpga/_x/link/int --temp_dir /home/diqingz2/llm_hls/fpga/_x/link/sys_link",
+  "args": [
+   "--xo",
+   "/home/diqingz2/llm_hls/fpga/attention_kernel.hw.xo",
+   "--config",
+   "/home/diqingz2/llm_hls/fpga/_x/link/int/syslinkConfig.ini",
+   "--xpfm",
+   "/opt/xilinx/platforms/xilinx_u250_gen3x16_xdma_4_1_202210_1/xilinx_u250_gen3x16_xdma_4_1_202210_1.xpfm",
+   "--target",
+   "hw",
+   "--output_dir",
+   "/home/diqingz2/llm_hls/fpga/_x/link/int",
+   "--temp_dir",
+   "/home/diqingz2/llm_hls/fpga/_x/link/sys_link"
+  ],
+  "iniFiles": [
+   {
+    "path": "/home/diqingz2/llm_hls/fpga/_x/link/int/syslinkConfig.ini",
+    "content": "nk=attention_kernel:1:attention_kernel_1\n\n"
+   }
+  ],
+  "cwd": "/home/diqingz2/llm_hls/fpga"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Status",
+ "dateTimestamp": "Thu Mar 27 16:34:49 2025",
+ "timestampMillis": "1743111289033",
+ "status": {
+  "cmdId": "98a350e9-a1ba-43b4-9144-8fb1d934d632",
+  "state": "CS_RUNNING"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Status",
+ "dateTimestamp": "Thu Mar 27 16:35:10 2025",
+ "timestampMillis": "1743111310087",
+ "status": {
+  "cmdId": "98a350e9-a1ba-43b4-9144-8fb1d934d632",
+  "state": "CS_PASSED"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_SubCmdStep",
+ "dateTimestamp": "Thu Mar 27 16:35:10 2025",
+ "timestampMillis": "1743111310091",
+ "buildStep": {
+  "cmdId": "3644a1b1-3d1b-4329-8840-be46eb9bc41e",
+  "name": "cf2sw",
+  "logFile": "",
+  "commandLine": "cf2sw -sdsl /home/diqingz2/llm_hls/fpga/_x/link/int/sdsl.dat -rtd /home/diqingz2/llm_hls/fpga/_x/link/int/cf2sw.rtd -nofilter /home/diqingz2/llm_hls/fpga/_x/link/int/cf2sw_full.rtd -xclbin /home/diqingz2/llm_hls/fpga/_x/link/int/xclbin_orig.xml -o /home/diqingz2/llm_hls/fpga/_x/link/int/xclbin_orig.1.xml",
+  "args": [
+   "-sdsl",
+   "/home/diqingz2/llm_hls/fpga/_x/link/int/sdsl.dat",
+   "-rtd",
+   "/home/diqingz2/llm_hls/fpga/_x/link/int/cf2sw.rtd",
+   "-nofilter",
+   "/home/diqingz2/llm_hls/fpga/_x/link/int/cf2sw_full.rtd",
+   "-xclbin",
+   "/home/diqingz2/llm_hls/fpga/_x/link/int/xclbin_orig.xml",
+   "-o",
+   "/home/diqingz2/llm_hls/fpga/_x/link/int/xclbin_orig.1.xml"
+  ],
+  "iniFiles": [],
+  "cwd": "/home/diqingz2/llm_hls/fpga"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Status",
+ "dateTimestamp": "Thu Mar 27 16:35:10 2025",
+ "timestampMillis": "1743111310092",
+ "status": {
+  "cmdId": "3644a1b1-3d1b-4329-8840-be46eb9bc41e",
+  "state": "CS_RUNNING"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Status",
+ "dateTimestamp": "Thu Mar 27 16:35:16 2025",
+ "timestampMillis": "1743111316346",
+ "status": {
+  "cmdId": "3644a1b1-3d1b-4329-8840-be46eb9bc41e",
+  "state": "CS_PASSED"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_SubCmdStep",
+ "dateTimestamp": "Thu Mar 27 16:35:16 2025",
+ "timestampMillis": "1743111316350",
+ "buildStep": {
+  "cmdId": "a1792bea-6f0f-44dd-abed-e4314ed36509",
+  "name": "rtd2_system_diagram",
+  "logFile": "",
+  "commandLine": "rtd2SystemDiagram",
+  "args": [],
+  "iniFiles": [],
+  "cwd": "/home/diqingz2/llm_hls/fpga"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Status",
+ "dateTimestamp": "Thu Mar 27 16:35:16 2025",
+ "timestampMillis": "1743111316351",
+ "status": {
+  "cmdId": "a1792bea-6f0f-44dd-abed-e4314ed36509",
+  "state": "CS_RUNNING"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Report",
+ "dateTimestamp": "Thu Mar 27 16:35:17 2025",
+ "timestampMillis": "1743111317069",
+ "report": {
+  "path": "/home/diqingz2/llm_hls/fpga/_x/link/int/systemDiagramModel.json",
+  "name": "",
+  "fileType": "JSON",
+  "reportType": "SYSTEM_DIAGRAM",
+  "cmdId": ""
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Status",
+ "dateTimestamp": "Thu Mar 27 16:35:17 2025",
+ "timestampMillis": "1743111317071",
+ "status": {
+  "cmdId": "a1792bea-6f0f-44dd-abed-e4314ed36509",
+  "state": "CS_PASSED"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_SubCmdStep",
+ "dateTimestamp": "Thu Mar 27 16:35:17 2025",
+ "timestampMillis": "1743111317075",
+ "buildStep": {
+  "cmdId": "99c1111e-e381-43f4-a26c-ec665eb4e84c",
+  "name": "vpl",
+  "logFile": "",
+  "commandLine": "vpl -t hw -f /opt/xilinx/platforms/xilinx_u250_gen3x16_xdma_4_1_202210_1/xilinx_u250_gen3x16_xdma_4_1_202210_1.xpfm --remote_ip_cache /home/diqingz2/llm_hls/fpga/.ipcache --trace_memory DDR[0] --output_dir /home/diqingz2/llm_hls/fpga/_x/link/int --log_dir /home/diqingz2/llm_hls/fpga/_x/logs/link --report_dir /home/diqingz2/llm_hls/fpga/_x/reports/link --config /home/diqingz2/llm_hls/fpga/_x/link/int/vplConfig.ini -k /home/diqingz2/llm_hls/fpga/_x/link/int/kernel_info.dat --webtalk_flag Vitis --temp_dir /home/diqingz2/llm_hls/fpga/_x/link --no-info --iprepo /home/diqingz2/llm_hls/fpga/_x/link/int/xo/ip_repo/xilinx_com_hls_attention_kernel_1_0 --messageDb /home/diqingz2/llm_hls/fpga/_x/link/run_link/vpl.pb /home/diqingz2/llm_hls/fpga/_x/link/int/dr.bd.tcl",
+  "args": [
+   "-t",
+   "hw",
+   "-f",
+   "/opt/xilinx/platforms/xilinx_u250_gen3x16_xdma_4_1_202210_1/xilinx_u250_gen3x16_xdma_4_1_202210_1.xpfm",
+   "--remote_ip_cache",
+   "/home/diqingz2/llm_hls/fpga/.ipcache",
+   "--trace_memory",
+   "DDR[0]",
+   "--output_dir",
+   "/home/diqingz2/llm_hls/fpga/_x/link/int",
+   "--log_dir",
+   "/home/diqingz2/llm_hls/fpga/_x/logs/link",
+   "--report_dir",
+   "/home/diqingz2/llm_hls/fpga/_x/reports/link",
+   "--config",
+   "/home/diqingz2/llm_hls/fpga/_x/link/int/vplConfig.ini",
+   "-k",
+   "/home/diqingz2/llm_hls/fpga/_x/link/int/kernel_info.dat",
+   "--webtalk_flag",
+   "Vitis",
+   "--temp_dir",
+   "/home/diqingz2/llm_hls/fpga/_x/link",
+   "--no-info",
+   "--iprepo",
+   "/home/diqingz2/llm_hls/fpga/_x/link/int/xo/ip_repo/xilinx_com_hls_attention_kernel_1_0",
+   "--messageDb",
+   "/home/diqingz2/llm_hls/fpga/_x/link/run_link/vpl.pb",
+   "/home/diqingz2/llm_hls/fpga/_x/link/int/dr.bd.tcl"
+  ],
+  "iniFiles": [
+   {
+    "path": "/home/diqingz2/llm_hls/fpga/_x/link/int/vplConfig.ini",
+    "content": "[advanced]\nmisc=report=type report_timing_summary name impl_report_timing_summary_route_design_summary steps {route_design} runs {impl_1} options {-max_paths 10}\nmisc=report=type report_timing_summary name impl_report_timing_summary_post_route_phys_opt_design_summary steps {post_route_phys_opt_design} runs {impl_1} options {-max_paths 10}\nparam=compiler.enablePerformanceTrace=1\nparam=compiler.vppCurrentWorkingDir=/home/diqingz2/llm_hls/fpga\nmisc=BinaryName=attention_kernel.hw\n\n[connectivity]\nnk=attention_kernel:1:attention_kernel_1\n\n[vivado]\nprop=run.__KERNEL__.{STEPS.SYNTH_DESIGN.ARGS.MORE OPTIONS}={-directive sdx_optimization_effort_high}\n\n"
+   }
+  ],
+  "cwd": "/home/diqingz2/llm_hls/fpga"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Status",
+ "dateTimestamp": "Thu Mar 27 16:35:17 2025",
+ "timestampMillis": "1743111317075",
+ "status": {
+  "cmdId": "99c1111e-e381-43f4-a26c-ec665eb4e84c",
+  "state": "CS_RUNNING"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_CmdStep",
+ "dateTimestamp": "Thu Mar 27 16:35:19 2025",
+ "timestampMillis": "1743111319181",
+ "buildStep": {
+  "cmdId": "e8b24121-ab08-4469-9d74-2bab62e5e9ef",
+  "name": "vpl",
+  "logFile": "/home/diqingz2/llm_hls/fpga/_x/link/link.steps.log",
+  "commandLine": "/opt/xilinx/Vitis/2022.1/bin/unwrapped/lnx64.o/vpl -t hw -f /opt/xilinx/platforms/xilinx_u250_gen3x16_xdma_4_1_202210_1/xilinx_u250_gen3x16_xdma_4_1_202210_1.xpfm --remote_ip_cache /home/diqingz2/llm_hls/fpga/.ipcache --trace_memory DDR[0] --output_dir /home/diqingz2/llm_hls/fpga/_x/link/int --log_dir /home/diqingz2/llm_hls/fpga/_x/logs/link --report_dir /home/diqingz2/llm_hls/fpga/_x/reports/link --config /home/diqingz2/llm_hls/fpga/_x/link/int/vplConfig.ini -k /home/diqingz2/llm_hls/fpga/_x/link/int/kernel_info.dat --webtalk_flag Vitis --temp_dir /home/diqingz2/llm_hls/fpga/_x/link --no-info --iprepo /home/diqingz2/llm_hls/fpga/_x/link/int/xo/ip_repo/xilinx_com_hls_attention_kernel_1_0 --messageDb /home/diqingz2/llm_hls/fpga/_x/link/run_link/vpl.pb /home/diqingz2/llm_hls/fpga/_x/link/int/dr.bd.tcl ",
+  "args": [],
+  "iniFiles": [],
+  "cwd": "/home/diqingz2/llm_hls/fpga/_x/link/run_link"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Status",
+ "dateTimestamp": "Thu Mar 27 16:35:19 2025",
+ "timestampMillis": "1743111319181",
+ "status": {
+  "cmdId": "e8b24121-ab08-4469-9d74-2bab62e5e9ef",
+  "state": "CS_RUNNING"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_VivadoProject",
+ "dateTimestamp": "Thu Mar 27 16:35:25 2025",
+ "timestampMillis": "1743111325577",
+ "vivadoProject": {
+  "openDir": "/home/diqingz2/llm_hls/fpga/_x/link/vivado/vpl",
+  "openScript": "openprj.tcl",
+  "relativeProject": "prj/prj.xpr"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_SubCmdStep",
+ "dateTimestamp": "Thu Mar 27 16:35:25 2025",
+ "timestampMillis": "1743111325578",
+ "buildStep": {
+  "cmdId": "65e83d35-4a76-4d10-ae41-2ec40b722fdd",
+  "name": "vivado",
+  "logFile": "/home/diqingz2/llm_hls/fpga/_x/link/vivado/vpl/vivado.log",
+  "commandLine": "vivado -log vivado.log -applog -m64 -messageDb vivado.pb -mode batch -source vpl.tcl -notrace",
+  "args": [
+   "-log",
+   "vivado.log",
+   "-applog",
+   " -m64",
+   "-messageDb",
+   "vivado.pb",
+   "-mode",
+   "batch",
+   "-source",
+   "vpl.tcl",
+   "-notrace"
+  ],
+  "iniFiles": [],
+  "cwd": "/home/diqingz2/llm_hls/fpga/_x/link/run_link"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Status",
+ "dateTimestamp": "Thu Mar 27 16:35:25 2025",
+ "timestampMillis": "1743111325579",
+ "status": {
+  "cmdId": "65e83d35-4a76-4d10-ae41-2ec40b722fdd",
+  "state": "CS_RUNNING"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Report",
+ "dateTimestamp": "Thu Mar 27 16:36:34 2025",
+ "timestampMillis": "1743111394098",
+ "report": {
+  "path": "/home/diqingz2/llm_hls/fpga/_x/link/int/debug_ip_layout.rtd",
+  "name": "",
+  "fileType": "JSON",
+  "reportType": "DEBUG_IP_LAYOUT",
+  "cmdId": ""
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Report",
+ "dateTimestamp": "Thu Mar 27 16:36:34 2025",
+ "timestampMillis": "1743111394607",
+ "report": {
+  "path": "/home/diqingz2/llm_hls/fpga/_x/link/int/automation_summary_update_bd.txt",
+  "name": "",
+  "fileType": "TEXT",
+  "reportType": "VITIS_DESIGN_FLOW",
+  "cmdId": ""
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_CmdStep",
+ "dateTimestamp": "Thu Mar 27 16:45:48 2025",
+ "timestampMillis": "1743111948311",
+ "buildStep": {
+  "cmdId": "e1c47839-0c70-4883-bf08-e290e649eb7c",
+  "name": "vivado.impl",
+  "logFile": "",
+  "commandLine": "",
+  "args": [],
+  "iniFiles": [],
+  "cwd": "/home/diqingz2/llm_hls/fpga/_x/link/vivado/vpl"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Status",
+ "dateTimestamp": "Thu Mar 27 16:45:48 2025",
+ "timestampMillis": "1743111948312",
+ "status": {
+  "cmdId": "e1c47839-0c70-4883-bf08-e290e649eb7c",
+  "state": "CS_RUNNING"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_CmdStep",
+ "dateTimestamp": "Thu Mar 27 16:45:48 2025",
+ "timestampMillis": "1743111948313",
+ "buildStep": {
+  "cmdId": "72eb116d-7020-444a-a501-bd30550a700f",
+  "name": "vivado.impl.impl_1",
+  "logFile": "/home/diqingz2/llm_hls/fpga/_x/link/vivado/vpl/prj/prj.runs/impl_1/runme.log",
+  "commandLine": "",
+  "args": [],
+  "iniFiles": [],
+  "cwd": "/home/diqingz2/llm_hls/fpga/_x/link/vivado/vpl/prj/prj.runs/impl_1"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Status",
+ "dateTimestamp": "Thu Mar 27 16:45:48 2025",
+ "timestampMillis": "1743111948313",
+ "status": {
+  "cmdId": "72eb116d-7020-444a-a501-bd30550a700f",
+  "state": "CS_RUNNING"
+ }
+}
+</ENTRY>

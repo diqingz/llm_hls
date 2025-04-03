@@ -1,0 +1,11 @@
+Thu Apr  3 13:59:03 2025: Server was asked to start on port: '33248'
+Thu Apr  3 13:59:03 2025: Server is using token UUID: '80663599-a0b7-4dc5-8d11-5171d1478bea'
+Thu Apr  3 13:59:03 2025: Attempting to start server on port '33248'
+Thu Apr  3 13:59:03 2025: XRC main fifo: created main fifo '/tmp/xrcmain80663599-a0b7-4dc5-8d11-5171d1478bea', fd read = 13
+Thu Apr  3 13:59:03 2025: Running Rule Check Server
+Thu Apr  3 13:59:03 2025: Version 1.6.1
+Thu Apr  3 13:59:03 2025: Rule Check Server: Accepted socket connection from client
+Thu Apr  3 13:59:03 2025: EXCHANGE_TOKEN received, server token: 80663599-a0b7-4dc5-8d11-5171d1478bea, passed token: 80663599-a0b7-4dc5-8d11-5171d1478bea
+Thu Apr  3 13:59:03 2025: SESSION_MGR: creating session with session uuid: '87ee7eeb-69cd-43b5-992c-db642719d509' and name 'v++_compile_attention_kernel.hw'
+Thu Apr  3 13:59:50 2025: Rule Check Server: Accepted socket connection from client
+Thu Apr  3 14:00:49 2025: SESSION_MGR: closing session for UUID '87ee7eeb-69cd-43b5-992c-db642719d509' with name 'v++_compile_attention_kernel.hw'

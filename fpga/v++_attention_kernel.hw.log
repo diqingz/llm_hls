@@ -1,0 +1,40 @@
+INFO: [v++ 60-1306] Additional information associated with this v++ compile can be found at:
+	Reports: /home/diqingz2/llm_hls/fpga/_x/reports/attention_kernel.hw
+	Log files: /home/diqingz2/llm_hls/fpga/_x/logs/attention_kernel.hw
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/diqingz2/llm_hls/fpga/attention_kernel.hw.xo.compile_summary, at Thu Apr  3 13:59:02 2025
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Thu Apr  3 13:59:02 2025
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/diqingz2/llm_hls/fpga/_x/reports/attention_kernel.hw/v++_compile_attention_kernel.hw_guidance.html', at Thu Apr  3 13:59:03 2025
+INFO: [v++ 60-895]   Target platform: /opt/xilinx/platforms/xilinx_u250_gen3x16_xdma_4_1_202210_1/xilinx_u250_gen3x16_xdma_4_1_202210_1.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/xilinx/platforms/xilinx_u250_gen3x16_xdma_4_1_202210_1/hw/hw.xsa'
+INFO: [v++ 74-78] Compiler Version string: 2022.1
+INFO: [v++ 60-585] Compiling for hardware target
+INFO: [v++ 60-423]   Target device: xilinx_u250_gen3x16_xdma_4_1_202210_1
+INFO: [v++ 60-242] Creating kernel: 'attention_kernel'
+
+===>The following messages were generated while  performing high-level synthesis for kernel: attention_kernel Log file: /home/diqingz2/llm_hls/fpga/_x/attention_kernel.hw/attention_kernel/vitis_hls.log :
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_59_4'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 5, loop 'VITIS_LOOP_59_4'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_67_5'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 5, loop 'VITIS_LOOP_67_5'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_80_7'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 5, loop 'VITIS_LOOP_80_7'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_114_10'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 3, Depth = 21, loop 'VITIS_LOOP_114_10'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_128_11'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 5, loop 'VITIS_LOOP_128_11'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_140_12'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 1, loop 'VITIS_LOOP_140_12'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_150_14'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 12, loop 'VITIS_LOOP_150_14'
+INFO: [v++ 204-61] Pipelining loop 'VITIS_LOOP_158_15'.
+INFO: [v++ 200-1470] Pipelining result : Target II = 1, Final II = 1, Depth = 3, loop 'VITIS_LOOP_158_15'
+INFO: [v++ 200-790] **** Loop Constraint Status: All loop constraints were NOT satisfied.
+INFO: [v++ 200-789] **** Estimated Fmax: 273.97 MHz
+INFO: [v++ 60-594] Finished kernel compilation
+INFO: [v++ 60-244] Generating system estimate report...
+INFO: [v++ 60-1092] Generated system estimate report: /home/diqingz2/llm_hls/fpga/_x/reports/attention_kernel.hw/system_estimate_attention_kernel.hw.xtxt
+INFO: [v++ 60-586] Created attention_kernel.hw.xo
+INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command. 
+    vitis_analyzer /home/diqingz2/llm_hls/fpga/attention_kernel.hw.xo.compile_summary 
+INFO: [v++ 60-791] Total elapsed time: 0h 1m 58s
+INFO: [v++ 60-1653] Closing dispatch client.
