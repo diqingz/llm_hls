@@ -19,6 +19,7 @@ There will be other versions of this code that specialize it and make it fast.
 #include <unistd.h>
 #ifdef OMP
 #include <omp.h>
+#include <CL/cl.h>
 #endif
 // our own utilities
 // defines: fopenCheck, freadCheck, fcloseCheck, fseekCheck, mallocCheck
@@ -27,10 +28,18 @@ There will be other versions of this code that specialize it and make it fast.
 #include "llmc/tokenizer.h"
 // defines: dataloader_init, dataloader_reset, dataloader_next_batch, dataloader_free
 #include "llmc/dataloader.h"
-
+#include "attention_fpga.h"
 // ----------------------------------------------------------------------------
 // all the individual layers' forward and backward passes
 // B = batch_size, T = sequence_length, C = channels, V = vocab_size
+
+#include <sys/time.h>
+
+// Declare the external function from the shared library
+extern int process_attention(const char* xclbin_file,
+                           float* input_tensor,
+                           float* output_tensor,
+                           int B, int T, int C, int NH);
 
 void attention_forward_fpga(float* out, float* preatt, float* att,
     float* inp, int B, int T, int C, int NH);
@@ -1250,50 +1259,58 @@ int sample_mult(float* probabilities, int n, float coin) {
 
 void attention_forward_fpga(float* out, float* preatt, float* att,
     float* inp, int B, int T, int C, int NH) {
-// Save input tensor to a file for FPGA processing
-FILE* f = fopen("input_tensor.bin", "wb");
-if (!f) {
-printf("Error: Failed to create input_tensor.bin\n");
-return;
+    //!
+    printf("Starting FPGA attention computation for B=%d, T=%d, C=%d, NH=%d\n", B, T, C, NH);
+// Start timing
+struct timeval start_time, end_time;
+gettimeofday(&start_time, NULL);
+
+// Direct memory-mapped call to FPGA
+char xclbin_path[512];
+sprintf(xclbin_path, "%s/llm_hls/fpga/attention_kernel.hw.xclbin", getenv("HOME"));
+//!
+printf("Looking for XCLBIN at: %s\n", xclbin_path);
+
+// Check if file exists
+FILE* test = fopen(xclbin_path, "r");
+if (test) {
+    fclose(test);
+    printf("XCLBIN file found\n");
+} else {
+    printf("ERROR: XCLBIN file not found\n");
 }
 
-// Write dimensions first
-fwrite(&B, sizeof(int), 1, f);
-fwrite(&T, sizeof(int), 1, f);
-fwrite(&C, sizeof(int), 1, f);
-fwrite(&NH, sizeof(int), 1, f);
+printf("Accessing values to call process_attention\n");
+///[DEBUG]Memory accessing
+printf("Memory layout debugging:\n");
+printf("Input tensor address: %p\n", (void*)inp);
+printf("First few inp values: %f %f %f %f\n", inp[0], inp[1], inp[2], inp[3]);
 
-// Write input data
-fwrite(inp, sizeof(float), B * T * 3 * C, f);
-fclose(f);
-printf("Saved input tensor to input_tensor.bin\n");
-
-// Execute the FPGA host program with the compiled XCLBIN
-// Note: Use the path to your compiled XCLBIN file
-if (system("cd ~/llm_hls/fpga && ./attention_fpga_host attention_kernel.hw.xclbin ../input_tensor.bin ../output_tensor.bin") != 0) {
-printf("Error: Failed to execute FPGA attention kernel\n");
-return;
+// Try to access values in the way your kernel expects them
+for (int sample_b = 0; sample_b < 1 && sample_b < B; sample_b++) {
+    for (int sample_t = 0; sample_t < 5 && sample_t < T; sample_t++) {
+        for (int sample_c = 0; sample_c < 5 && sample_c < C*3; sample_c++) {
+            int idx = sample_b * T * C * 3 + sample_t * C * 3 + sample_c;
+            printf("inp[b=%d,t=%d,c=%d] = %f\n", sample_b, sample_t, sample_c, inp[idx]);
+        }
+    }
+}
+//[DEBUG]Memory accessing
+printf("Calling process_attention...\n");
+int ret = process_attention(xclbin_path, inp, out, B, T, C, NH);
+printf("process_attention returned: %d\n", ret);
+if (ret != 0) {
+printf("Error: FPGA attention processing failed with code %d\n", ret);
+printf("Falling back to CPU implementation...\n");
+// Fallback to CPU implementation if FPGA fails
+attention_forward(out, preatt, att, inp, B, T, C, NH);
 }
 
-// Load the results
-f = fopen("output_tensor.bin", "rb");
-if (!f) {
-printf("Error: Failed to open output_tensor.bin\n");
-return;
-}
-
-size_t read_count = fread(out, sizeof(float), B * T * C, f);
-if (read_count != B * T * C) {
-printf("Error: Failed to read full output tensor from FPGA (read %zu of %d elements)\n", 
-read_count, B * T * C);
-return;
-}
-fclose(f);
-printf("Successfully loaded output tensor from FPGA\n");
-
-// Note: For the HLS kernel, we don't use preatt and att directly
-// They would be calculated internally in the kernel
-// If needed for debugging, you can also save these to files
+// End timing
+gettimeofday(&end_time, NULL);
+double elapsed_ms = (end_time.tv_sec - start_time.tv_sec) * 1000.0 +
+ (end_time.tv_usec - start_time.tv_usec) / 1000.0;
+printf("Total FPGA attention time (with direct memory): %.3f ms\n", elapsed_ms);
 }
 
 int main() {
