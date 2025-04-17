@@ -318,16 +318,47 @@ void calculate_scores(
 
                     // Marker write at the very last score of the kernel
                     if (b == B-1 && h == NH-1 && t == T-1 && t2 == t) {
-                        score_stream.write(9999.0f);
+                                            score_stream.write(9999.0f);
                     } else {
-                        score_stream.write(score);
-                    }
+                                            score_stream.write(score);
+                                        }
+
                 }
             }
         }
     }
 }
 
+//void calculate_scores(
+//    hls::stream<float>& query_stream,
+//    hls::stream<float>& key_stream,
+//    float* out,  // writing directly to memory
+//    int B, int T, int C, int NH
+//) {
+//    const int hs = C / NH;
+//    int idx = 0;
+//
+//    for (int b = 0; b < B; b++) {
+//        for (int h = 0; h < NH; h++) {
+//            for (int t = 0; t < 1; t++) {  // only do 1 time step
+//                for (int i = 0; i < hs; i++) {
+//                if (!query_stream.empty() && !key_stream.empty()) {
+//                    float q = query_stream.read();
+//                    float k = key_stream.read();
+//                    float sum = q + k;
+//
+//                    if (idx < 16) {
+//                        out[idx++] = sum;  // Write partial debug info
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//    }
+//
+//    // ✅ Confirm kernel made it through
+//    out[0] = 1234.5f;
+//}
 
 
 void apply_softmax(
@@ -368,8 +399,14 @@ void apply_softmax(
                 for (int t2 = 0; t2 < T; t2++) {
                     #pragma HLS PIPELINE II=1
                     float norm_weight = (t2 <= t) ? expvalues[t2] * expsum_inv : 0.0f;
-                    softmax_stream.write(norm_weight);
+
+                    if (b == B-1 && h == NH-1 && t == T-1 && t2 == T-1) {
+                        softmax_stream.write(8888.0f);  // New marker value for softmax completion
+                    } else {
+                        softmax_stream.write(norm_weight);
+                    }
                 }
+
             }
         }
     }
@@ -389,52 +426,53 @@ void apply_attention(
 
     for (int b = 0; b < B; b++) {
         for (int h = 0; h < NH; h++) {
-            for (int t = 0; t < T; t++) {
-//                float values[64];  // Assuming max head size
-                float values[64][64];  // [T][hs] instead of just [hs]
-                #pragma HLS ARRAY_PARTITION variable=values dim=2 factor=8 cyclic
+            // Buffer values once per head
+            float values[64][64];  // [T][hs]
+            #pragma HLS ARRAY_PARTITION variable=values dim=2 factor=8 cyclic
 
+            for (int t2 = 0; t2 < T; t2++) {
+                for (int i = 0; i < hs; i++) {
+                    #pragma HLS PIPELINE II=1
+                    values[t2][i] = value_stream.read();
+                }
+            }
+
+            for (int t = 0; t < T; t++) {
                 float output[64] = {0.0f};
 
-                // Read values
-//                for (int i = 0; i < hs; i++) {
-//                    #pragma HLS PIPELINE II=1
-//                    values[i] = value_stream.read();
-//                }
-                for (int t2 = 0; t2 < T; t2++) {
-                    for (int i = 0; i < hs; i++) {
-                        #pragma HLS PIPELINE II=1
-                        values[t2][i] = value_stream.read();  // storing per-timestep vectors
-                    }
-                }
-
-                // Compute weighted values
                 for (int t2 = 0; t2 <= t; t2++) {
-                    #pragma HLS PIPELINE II=1
                     float weight = softmax_stream.read();
                     for (int i = 0; i < hs; i++) {
-//                        output[i] += weight * values[i];
+                        #pragma HLS PIPELINE II=1
                         output[i] += weight * values[t2][i];
                     }
                 }
 
-                // Write results
                 for (int i = 0; i < hs; i++) {
                     #pragma HLS PIPELINE II=1
-                    out[b*T*C + t*C + h*hs + i] = output[i];
+                    if (b == B-1 && h == NH-1 && t == T-1 && i == hs-1) {
+                        out[b*T*C + t*C + h*hs + i] = 7777.0f;  // marker: attention stage done
+                    } else {
+                        out[b*T*C + t*C + h*hs + i] = output[i];
+                    }
                 }
             }
         }
     }
 }
 
-void drain_score_stream(hls::stream<float>& s, int B, int T, int NH) {
-    // Triangular number per head: T*(T+1)/2
+
+void drain_score_stream(hls::stream<float>& s, int B, int T, int NH, float* out) {
     int total_scores = B * NH * (T * (T + 1)) / 2;
     for (int i = 0; i < total_scores; ++i) {
-        volatile float tmp = s.read();
+        float val = s.read();
+        if (val == 9999.0f) {
+            out[0] = 1234.5f; // Confirm marker seen and signal host
+        }
+        volatile float discard = val;
     }
 }
+
 
 void drain_value_stream(hls::stream<float>& s, int B, int T, int C, int NH) {
     int hs = C / NH;
@@ -453,6 +491,22 @@ void drain_stream(hls::stream<float>& s, int B, int T, int C, int NH) {
     }
 }
 
+void drain_softmax_stream(hls::stream<float>& s, int B, int T, int C, int NH, float* out) {
+    int hs = C / NH;
+    int total_vals = B * T * NH * hs;
+
+    for (int i = 0; i < total_vals; ++i) {
+        float val = s.read();
+        if (val == 8888.0f) {
+            out[1] = 8888.0f; // Softmax marker found
+        } else {
+             out[1] = -888.0f; // Softmax marker missing (kernel may have stalled)
+         }
+        volatile float discard = val;
+    }
+}
+
+
 void attention_kernel(
     float* inp,           // Input tensor for QKV [B][T][3*C]
     float* out,           // Output tensor [B][T][C]
@@ -464,8 +518,8 @@ void attention_kernel(
 
 //    #pragma HLS INTERFACE m_axi port=inp offset=slave bundle=gmem0 depth=2048
 //    #pragma HLS INTERFACE m_axi port=out offset=slave bundle=gmem1 depth=2048
-        #pragma HLS INTERFACE m_axi port=inp offset=slave bundle=gmem0 depth=4096
-        #pragma HLS INTERFACE m_axi port=out offset=slave bundle=gmem1 depth=4096
+        #pragma HLS INTERFACE m_axi port=inp offset=slave bundle=gmem0 depth=65536
+        #pragma HLS INTERFACE m_axi port=out offset=slave bundle=gmem1 depth=65536
 
     // Scalar interface
     #pragma HLS INTERFACE s_axilite port=B bundle=control
@@ -486,7 +540,7 @@ void attention_kernel(
     #pragma HLS STREAM variable=query_stream depth=4096
     #pragma HLS STREAM variable=key_stream depth=4096
     #pragma HLS STREAM variable=value_stream depth=4096
-    #pragma HLS STREAM variable=score_stream depth=32768
+    #pragma HLS STREAM variable=score_stream depth=4096
     #pragma HLS STREAM variable=softmax_stream depth=4096
 
     #pragma HLS DATAFLOW
@@ -497,21 +551,30 @@ void attention_kernel(
 
     // Remaining stages
     calculate_scores(query_stream, key_stream, score_stream, B, T, C, NH);
-//    apply_softmax(score_stream, softmax_stream, B, T, C, NH);
-//    apply_attention(out, value_stream, softmax_stream, B, T, C, NH);
+    apply_softmax(score_stream, softmax_stream, B, T, C, NH);
+    apply_attention(out, value_stream, softmax_stream, B, T, C, NH);
 
     //Draining streams
-    drain_score_stream(score_stream, B, T, NH);
-    drain_value_stream(value_stream, B, T, C, NH);
+//    drain_score_stream(score_stream, B, T, NH, out);
+//    drain_softmax_stream(softmax_stream, B, T, C, NH, out);
+//    drain_value_stream(value_stream, B, T, C, NH);
+
+
 //    drain_stream(query_stream, B, T, C, NH);
 //    drain_stream(key_stream, B, T, C, NH);
 //    drain_stream(value_stream, B, T, C, NH);
-
-    // Add at the end of attention_kernel:
-    if (B > 0 && T > 0 && C > 0) {
-        out[0] = 1234.5f; // write one float to signal kernel ran
-    }
-
-}
-
+//    if (!marker_seen) {
+//        out[0] = -999.0f;  //  Indicates: marker never seen, kernel might have stalled
+//    } else {
+//        out[0] = 1234.5f;  // Indicates: marker seen, kernel completed successfully
+//    }
+    //TRY THIS, b4 change--- finished fpga kernel
+    //    if (seen) {
+//              out[0] = 1234.5f;  // this is outside DATAFLOW, so only one writer to gmem1
+//          }
+//          // At the end of attention_kernel()
+//          if (B > 0 && T > 0 && C > 0 && out[0] != 1234.5f) {
+//              out[0] = -999.0f; // fallback value indicating marker was missed
+//          }
+  }
 } // extern "C"
